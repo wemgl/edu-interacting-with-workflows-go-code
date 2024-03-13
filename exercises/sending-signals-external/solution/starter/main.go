@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	interacting "edu-interacting-with-workflows-go-code/exercises/sending-signals-external/solution"
+	signals "interacting/exercises/sending-signals-external/solution"
 
 	"go.temporal.io/sdk/client"
 )
@@ -24,7 +24,7 @@ func main() {
 	we, err := c.ExecuteWorkflow(
 		context.Background(),
 		workflowOptions,
-		interacting.Workflow,
+		signals.Workflow,
 		"Plain text input",
 	)
 	if err != nil {

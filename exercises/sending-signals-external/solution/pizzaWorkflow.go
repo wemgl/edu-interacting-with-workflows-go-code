@@ -1,4 +1,4 @@
-package interacting
+package signals
 
 import (
 	"context"
@@ -7,6 +7,10 @@ import (
 	"go.temporal.io/sdk/activity"
 	"go.temporal.io/sdk/workflow"
 )
+
+type FulfillOrderSignal struct {
+	Fulfilled bool
+}
 
 func Workflow(ctx workflow.Context, input string) (string, error) {
 	ao := workflow.ActivityOptions{
@@ -17,15 +21,20 @@ func Workflow(ctx workflow.Context, input string) (string, error) {
 	logger := workflow.GetLogger(ctx)
 	logger.Info("Signal workflow started", "input", input)
 
+	var signal FulfillOrderSignal
 	var result string
 
-	err := workflow.ExecuteActivity(ctx, Activity, input).Get(ctx, &result)
-	if err != nil {
-		logger.Error("Activity failed.", "Error", err)
-		return "", err
-	}
+	signalChan := workflow.GetSignalChannel(ctx, "fulfill-order-signal")
+	signalChan.Receive(ctx, &signal)
+	if signal.Fulfilled == true {
+		err := workflow.ExecuteActivity(ctx, Activity, input).Get(ctx, &result)
+		if err != nil {
+			logger.Error("Activity failed.", "Error", err)
+			return "", err
+		}
 
-	logger.Info("Signal workflow completed.", "result", result)
+		logger.Info("Signal workflow completed.", "result", result)
+	}
 
 	return result, nil
 }

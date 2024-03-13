@@ -1,4 +1,4 @@
-module edu-interacting-with-workflows-go-code
+module interacting
 
 go 1.19
 

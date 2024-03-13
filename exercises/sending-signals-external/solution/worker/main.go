@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	interacting "edu-interacting-with-workflows-go-code/exercises/sending-signals-external/solution"
+	signals "interacting/exercises/sending-signals-external/solution"
 
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/worker"
@@ -18,8 +18,8 @@ func main() {
 
 	w := worker.New(c, "signals", worker.Options{})
 
-	w.RegisterWorkflow(interacting.Workflow)
-	w.RegisterActivity(interacting.Activity)
+	w.RegisterWorkflow(signals.Workflow)
+	w.RegisterActivity(signals.Activity)
 
 	err = w.Run(worker.InterruptCh())
 	if err != nil {
