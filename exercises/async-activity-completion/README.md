@@ -22,7 +22,7 @@ Make your changes to the code in the `practice` subdirectory (look for `TODO` co
 
 ## Part C: Configure a Client to send CompleteActivity
 
-1. Now you can edit the `completionclient/main.go` file to call `CompleteActivity`. The first thing you'll need to do is add some way of supplying the `taskToken` specific to the Activity you are trying to complete at runtime. In a production system, you might retrieve the key from a database, but for now, you can configure this Client to accept it as an additional argument by adding `flag` parsing to the `main()` block:
+1. Now you can edit the `completionclient/main.go` file to call `CompleteActivity`. The first thing you'll need to do is add some way of supplying the `taskToken` specific to the Activity you are trying to complete at runtime. In a production system, you might store and retrieve the token from a database, but for now, you can configure this Client to accept it as an additional argument by adding `flag` parsing to the `main()` block:
 
 ```go
 var taskToken string
