@@ -20,15 +20,15 @@ In this part of the exercise, you will define your Query.
 2. Set up two string variables, `currentState := "started"` and `queryType := "current_state"`. One of these will contain the type of your Query, which will not change. The other will contain the `currentState` that is progressively updated and will be returned by the Query.
 3. Next, add the `workflow.SetQueryHandler()` function with the necessary error handling:
 
-   ```go
-   	err := workflow.SetQueryHandler(ctx, queryType, func() (string, error) {
-   		return currentState, nil
-   	})
-   	if err != nil {
-   		currentState = "failed to register query handler"
-   		return "", err
-   	}
-   ```
+```go
+err := workflow.SetQueryHandler(ctx, queryType, func() (string, error) {
+   return currentState, nil
+})
+if err != nil {
+   currentState = "failed to register query handler"
+   return "", err
+}
+```
 
 4. Finally, update `currentState` again after that block of code, to something like "waiting for signal". This is the state that the Workflow will be waiting at when we query it.
 5. Save the file.
@@ -40,21 +40,21 @@ In this part of the exercise, you will create another Temporal client that sends
 1. Edit the `queryclient/main.go` file. You will use `client.QueryWorkflow(context, "workflow-id", "run-id", "query-type")` to send a Query.
 2. Within the `main()` block, add the `client.QueryWorkflow()` function with the necessary parameters and error handling:
 
-   ```go
-   	response, err := c.QueryWorkflow(context.Background(), "queries", "", "current_state")
-   	if err != nil {
-   		log.Fatalln("Error sending the Query", err)
-   		return
-   	}
-   ```
+```go
+response, err := c.QueryWorkflow(context.Background(), "queries", "", "current_state")
+if err != nil {
+   log.Fatalln("Error sending the Query", err)
+   return
+}
+```
 
 3. Immediately after that, add some logging for getting the Query result and logging it to your terminal:
 
-   ```go
-   	var result string
-   	response.Get(&result)
-   	log.Println("Received Query result. Result: " + result)
-   ```
+```go
+var result string
+response.Get(&result)
+log.Println("Received Query result. Result: " + result)
+```
 
 4. Save the file.
 
