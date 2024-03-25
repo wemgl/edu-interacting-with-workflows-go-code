@@ -35,7 +35,7 @@ if err != nil {
 
 ## Part B: Performing a Query from a Client
 
-In this part of the exercise, you will create another Temporal client that sends a Signal. `queryclient/main.go` currently contains a near-empty Temporal client -- it looks like a Starter or a Worker, but it does not register any Workflows or do anything. You will use this client to send a Query.
+In this part of the exercise, you will create another Temporal client that sends a Query. `queryclient/main.go` currently contains a near-empty Temporal client -- it looks like a Starter or a Worker, but it does not register any Workflows or do anything. You will use this client to send a Query.
 
 1. Edit the `queryclient/main.go` file. You will use `client.QueryWorkflow(context, "workflow-id", "run-id", "query-type")` to send a Query.
 2. Within the `main()` block, add the `client.QueryWorkflow()` function with the necessary parameters and error handling:
