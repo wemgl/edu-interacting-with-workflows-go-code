@@ -17,7 +17,7 @@ Make your changes to the code in the `practice` subdirectory (look for `TODO` co
 ## Part B: Set Your Activity to Return `ErrResultPending`
 
 1. Continue editing the same Activity definition in the `workflow.go` file. You need to add a `return` statement that returns a special kind of error, `activity.ErrResultPending`, that will Temporal that the Activity has not failed but will be completed asynchronously.
-2. Note that the Workflow's `StartToCloseTimeout` has been lenghtened to 300 seconds for this exercise. Activities can still time out if they are running in the background.
+2. Note that the Workflow's `StartToCloseTimeout` has been lengthened to 300 seconds for this exercise. Activities can still time out if they are running in the background.
 3. Save the file.
 
 ## Part C: Configure a Client to send CompleteActivity
