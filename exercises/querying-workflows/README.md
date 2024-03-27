@@ -96,6 +96,23 @@ Query result:
 ["waiting for signal"]
 ```
 
-Now you can send a Signal to your Workflow as in the previous exercise so it completes successfully, or just terminate it.
+Now you can send a Signal to your Workflow as in the previous exercise so it completes successfully.
+
+## Part E: Querying a Completed Workflow
+
+Finally, you can demonstrate querying completed Workflows. Update the "currentState" variable in `workflow.go` once more just before the Workflow returns, so that you can demonstrate querying a completed workflow. Then, re-run the workflow, and query it from the command line again:
+
+```bash
+temporal workflow query \
+    --workflow-id="queries" \
+    --type="current_state"
+```
+
+```
+Query result:
+["workflow completed"]
+```
+
+You need to have a running Worker to query completed Workflows.
 
 ### This is the end of the exercise.

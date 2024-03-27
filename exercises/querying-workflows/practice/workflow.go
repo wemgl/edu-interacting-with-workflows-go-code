@@ -35,7 +35,8 @@ func Workflow(ctx workflow.Context, input string) (string, error) {
 			logger.Error("Activity failed.", "Error", err)
 			return "", err
 		}
-
+		// TODO Part E: Update the `currentState` variable after the Workflow has
+		// has completed, so that you can query it later.
 		logger.Info("Signal workflow completed.", "result", result)
 	}
 
