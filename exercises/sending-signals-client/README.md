@@ -1,11 +1,10 @@
-## Exercise #1: Sending an External Signal
+## Exercise #2: Sending a Signal from a Client
 
 During this exercise, you will:
 
 - Define and handle a Signal
 - Retrieve a handle on the Workflow to Signal
-- Send an external Signal
-- Use a Temporal Client to submit execution requests for both Workflows
+- Use a Temporal Client to send the Signal
 
 Make your changes to the code in the `practice` subdirectory (look for
 `TODO` comments that will guide you to where you should make changes to
