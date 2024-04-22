@@ -100,7 +100,7 @@ Now you can send a Signal to your Workflow as in the previous exercise so it com
 
 ## Part E: Querying a Completed Workflow
 
-Finally, you can demonstrate querying completed Workflows. Update the "currentState" variable in `workflow.go` once more just before the Workflow returns, so that you can demonstrate querying a completed workflow. Then, re-run the workflow, and query it from the command line again:
+Finally, you can demonstrate querying completed Workflows. Update the `currentState` variable in `workflow.go` once more just before the Workflow returns, so that you can demonstrate querying a completed workflow. Then, re-run the workflow, and query it from the command line again:
 
 ```bash
 temporal workflow query \
