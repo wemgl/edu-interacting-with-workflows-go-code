@@ -67,7 +67,7 @@ func PizzaWorkflow(ctx workflow.Context, order PizzaOrder) (OrderConfirmation, e
 	return confirmation, nil
 }
 
-func FulfillOrderWorkflow(ctx workflow.Context, order PizzaOrder) error {
+func FulfillOrderWorkflow(ctx workflow.Context, order PizzaOrder) (string, error) {
 	retrypolicy := &temporal.RetryPolicy{
 		MaximumInterval: time.Second * 10,
 	}
@@ -84,13 +84,13 @@ func FulfillOrderWorkflow(ctx workflow.Context, order PizzaOrder) error {
 	err := workflow.ExecuteActivity(ctx, MakePizzas, order).Get(ctx, nil)
 	if err != nil {
 		logger.Error("Unable to make pizzas", "Error", err)
-		return nil
+		return "orderUnfulfilled", nil
 	}
 
 	err = workflow.ExecuteActivity(ctx, DeliverPizzas, order).Get(ctx, nil)
 	if err != nil {
 		logger.Error("Unable to deliver pizzas", "Error", err)
-		return nil
+		return "orderUnfulfilled", nil
 	}
 
 	err = workflow.SignalExternalWorkflow(ctx, "pizza-workflow-order-Z1238", "", "fulfill-order-signal", signal).Get(ctx, nil)
@@ -98,5 +98,5 @@ func FulfillOrderWorkflow(ctx workflow.Context, order PizzaOrder) error {
 		logger.Error("Error sending the Signal", "Error", err)
 	}
 
-	return nil
+	return "orderFulfilled", nil
 }
