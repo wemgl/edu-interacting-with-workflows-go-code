@@ -50,6 +50,12 @@ tasks:
       clear
       echo "Use this terminal to run commands.."
     openMode: split-right
+  - name: Signal Terminal
+    command: |
+      source /workspace/edu-interacting-with-workflows-go-code/.bash.cfg
+      clear
+      echo "Use this terminal to send additional signals.."
+    openMode: split-right
 
 ports:
   - name: Temporal server

@@ -71,7 +71,7 @@ At this point, you can run your Workflow. Because it is the same Workflow from t
 2024/03/14 08:48:21 INFO  Query workflow started Namespace default TaskQueue queries WorkerID 43388@Omelas@ WorkflowType Workflow WorkflowID queries RunID 905330da-9c0f-490e-bd48-c6a9e8840f7a Attempt 1 input Plain text input
 ```
 
-3. You can now Query your Workflow. In a third terminal, navigate to the `queryclient` subdirectory and run `go run main.go`. It will send a Query to your Workflow, which will immediately return the Query result:
+1. You can now Query your Workflow. In a third terminal, run `go run queryclient/main.go`. It will send a Query to your Workflow, which will immediately return the Query result:
 
 ```
 2024/03/14 10:32:09 Received Query result. Result: waiting for signal
@@ -96,7 +96,7 @@ Query result:
 ["waiting for signal"]
 ```
 
-Now you can send a Signal to your Workflow as in the previous exercise so it completes successfully.
+Now you can send a Signal to your Workflow as in the previous exercise so it completes successfully. In the terminal you sent your Query from, run `go run signalclient/main.go`.
 
 ## Part E: Querying a Completed Workflow
 

@@ -48,7 +48,7 @@ At this point, you can run your Workflow. As with the Signal Exercise, the Workf
 2024/03/14 15:14:00 INFO  Activity Namespace default TaskQueue async WorkerID 22396@Omelas@ ActivityID 5 ActivityType Activity Attempt 1 WorkflowType Workflow WorkflowID async RunID 0c3cb022-042f-4437-b021-a6cf2a4afe1b taskToken 0a2461613733613533322d363337362d346130332d613563342d36626134626437306139623312056173796e631a2430633363623032322d303432662d343433372d623032312d61366366326134616665316220052801320135420841637469766974794a08080110be80401801
 ```
 
-3. You can now use this token to send a `CompleteActivity()` call from another client. In a third terminal, navigate to the `completeclient` subdirectory and run `go run main.go --tasktoken [tasktoken]`, pasting the token from the previous step. This will cause your Activity to return and your Workflow to successfully complete. The terminal running your Worker process should now show `workflow completed`:
+3. You can now use this token to send a `CompleteActivity()` call from another client. In a third terminal, navigate to the `completionclient` subdirectory and run `go run main.go --tasktoken [tasktoken]`, pasting the token from the previous step. This will cause your Activity to return and your Workflow to successfully complete. The terminal running your Worker process should now show `workflow completed`:
 
 ```
 2024/03/14 15:15:45 INFO  Async workflow completed. Namespace default TaskQueue async WorkerID 41996@Omelas@ WorkflowType Workflow WorkflowID async RunID cf865c9f-2487-47a3-84c4-fd0c6da6ee6c Attempt 1 result
