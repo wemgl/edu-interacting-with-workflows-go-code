@@ -15,7 +15,7 @@ Keep in mind that setting attributes is optional in some attributes' case, and t
 
 ## Part C: Upserting Attributes
 
-Within the Pizza Workflow code, we will now dynamically update Search Attributes using [`upsertTypedSearchAttributes`](https://docs.temporal.io/dev-guide/go/observability#upsert-search-attributes).
+Within the Pizza Workflow code, we will now dynamically update Search Attributes using [`UpsertTypedSearchAttributes`](https://docs.temporal.io/dev-guide/go/observability#upsert-search-attributes).
 
 1. In `workflow.go`, locate `workflow.UpsertTypedSearchAttributes(ctx, OrderFailedAttribute.ValueSet(false))` which is used to indicate that the order has not failed. It is marked not failed, because it is in the part of the logic when the Workflow has received the Signal that the order has been fulfilled.
 
