@@ -8,6 +8,10 @@ import (
 	"go.temporal.io/sdk/workflow"
 )
 
+var (
+	OrderFailedAttribute = temporal.NewSearchAttributeKeyBool("isOrderFailed")
+)
+
 func PizzaWorkflow(ctx workflow.Context, order PizzaOrder) (OrderConfirmation, error) {
 	retrypolicy := &temporal.RetryPolicy{
 		MaximumInterval: time.Second * 10,
@@ -22,14 +26,6 @@ func PizzaWorkflow(ctx workflow.Context, order PizzaOrder) (OrderConfirmation, e
 
 	logger := workflow.GetLogger(ctx)
 
-	failure := map[string]interface{}{
-		"isOrderFailed": true,
-	}
-
-	success := map[string]interface{}{
-		"isOrderFailed": false,
-	}
-
 	var totalPrice int
 	for _, pizza := range order.Items {
 		totalPrice += pizza.Price
@@ -39,12 +35,12 @@ func PizzaWorkflow(ctx workflow.Context, order PizzaOrder) (OrderConfirmation, e
 	err := workflow.ExecuteActivity(ctx, GetDistance, order.Address).Get(ctx, &distance)
 	if err != nil {
 		logger.Error("Unable get distance", "Error", err)
-		workflow.UpsertSearchAttributes(ctx, failure)
+		workflow.UpsertTypedSearchAttributes(ctx, OrderFailedAttribute.ValueSet(true))
 		return OrderConfirmation{}, err
 	}
 
 	if order.IsDelivery && distance.Kilometers > 25 {
-		workflow.UpsertSearchAttributes(ctx, failure)
+		workflow.UpsertTypedSearchAttributes(ctx, OrderFailedAttribute.ValueSet(true))
 		return OrderConfirmation{}, errors.New("customer lives too far away for delivery")
 	}
 
@@ -62,10 +58,10 @@ func PizzaWorkflow(ctx workflow.Context, order PizzaOrder) (OrderConfirmation, e
 	err = workflow.ExecuteActivity(ctx, SendBill, bill).Get(ctx, &confirmation)
 	if err != nil {
 		logger.Error("Unable to bill customer", "Error", err)
-		workflow.UpsertSearchAttributes(ctx, failure)
+		workflow.UpsertTypedSearchAttributes(ctx, OrderFailedAttribute.ValueSet(true))
 		return OrderConfirmation{}, err
 	}
 
-	workflow.UpsertSearchAttributes(ctx, success)
+	workflow.UpsertTypedSearchAttributes(ctx, OrderFailedAttribute.ValueSet(false))
 	return confirmation, nil
 }

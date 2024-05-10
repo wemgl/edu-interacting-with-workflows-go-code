@@ -9,17 +9,17 @@ This example shows how custom Search Attributes can be used in your Workflow. Th
 
 ## Part B: Setting a Custom Search Attribute Value While Starting a Workflow
 
-This is not a necessary step. In the `start/main.go` file, you can set Custom Search Attribute by adding them to the options when starting a Workflow execution using [`WorkflowOptions.searchAttributes`](https://docs.temporal.io/dev-guide/go/observability#custom-search-attributes). 
+This is not a necessary step. In the `start/main.go` file, you can set Custom Search Attribute by adding them to the options when starting a Workflow execution using [`WorkflowOptions.TypedSearchAttributes`](https://docs.temporal.io/dev-guide/go/observability#custom-search-attributes). 
 
 Keep in mind that setting attributes is optional in some attributes' case, and this is more for setting Search Attributes that are known at the start of the Workflow or may not change through the Workflow logic.
 
 ## Part C: Upserting Attributes
 
-Within the Pizza Workflow code, we will now dynamically update Search Attributes using [`upsertSearchAttributes`](https://docs.temporal.io/dev-guide/go/observability#upsert-search-attributes).
+Within the Pizza Workflow code, we will now dynamically update Search Attributes using [`upsertTypedSearchAttributes`](https://docs.temporal.io/dev-guide/go/observability#upsert-search-attributes).
 
-1. In `workflow.go`, locate `workflow.UpsertSearchAttributes(ctx, failure)` which is used to indicate that the order has not failed. It is marked not failed, because it is in the part of the logic when the Workflow has received the Signal that the order has been fulfilled.
+1. In `workflow.go`, locate `workflow.UpsertTypedSearchAttributes(ctx, OrderFailedAttribute.ValueSet(false))` which is used to indicate that the order has not failed. It is marked not failed, because it is in the part of the logic when the Workflow has received the Signal that the order has been fulfilled.
 
-2. In `workflow.go`, locate `workflow.UpsertSearchAttributes(ctx, success)` which is used to indicate that the order has failed. It is marked failed in the part of the Workflow code when the Workflow has received the Signal that the order has not been fulfilled successfully.
+2. In `workflow.go`, locate `workflow.UpsertTypedSearchAttributes(ctx, OrderFailedAttribute.ValueSet(true))` which is used to indicate that the order has failed. It is marked failed in the part of the Workflow code when the Workflow has received the Signal that the order has not been fulfilled successfully.
 
 ## Part D: Running Your Workflow
 
