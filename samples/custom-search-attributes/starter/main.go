@@ -8,6 +8,7 @@ import (
 	"log"
 
 	"go.temporal.io/sdk/client"
+	"go.temporal.io/sdk/temporal"
 )
 
 func main() {
@@ -21,12 +22,10 @@ func main() {
 
 	workflowID := fmt.Sprintf("pizza-workflow-order-%s", order.OrderNumber)
 
-	searchAttributes := map[string]interface{}{}
-
 	options := client.StartWorkflowOptions{
-		ID:               workflowID,
-		TaskQueue:        pizza.TaskQueueName,
-		SearchAttributes: searchAttributes,
+		ID:                    workflowID,
+		TaskQueue:             pizza.TaskQueueName,
+		TypedSearchAttributes: temporal.NewSearchAttributes(pizza.OrderFailedAttribute.ValueSet(false)),
 	}
 
 	we, err := c.ExecuteWorkflow(context.Background(), options, pizza.PizzaWorkflow, order)
