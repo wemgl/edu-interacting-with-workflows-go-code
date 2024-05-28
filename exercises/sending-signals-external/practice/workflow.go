@@ -8,10 +8,6 @@ import (
 	"go.temporal.io/sdk/workflow"
 )
 
-type FulfillOrderSignal struct {
-	Fulfilled bool
-}
-
 // TODO Part A: Create a type of `struct{}` named `FulfillOrderSignal`
 // that contains a single `bool` named `Fulfilled`.
 
