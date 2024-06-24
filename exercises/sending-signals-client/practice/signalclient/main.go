@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-	// TODO Part C: Add signals "interacting/exercises/sending-signals/solution"
+	// TODO Part C: Add signals "interacting/exercises/sending-signals-client/practice"
 	// to your module imports.
 	// TODO Part D: Add "context" to your module imports.
 
