@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	signals "interacting/exercises/sending-signals/solution"
+	signals "interacting/exercises/sending-signals-client/practice"
 
 	"go.temporal.io/sdk/client"
 )
