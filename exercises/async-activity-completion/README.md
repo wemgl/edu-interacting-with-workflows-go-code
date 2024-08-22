@@ -42,7 +42,7 @@ if err != nil {
 At this point, you can run your Workflow. As with the Signal Exercise, the Workflow will not return on its own -- in this case, because your Activity is set to complete asynchronously, and will wait to receive `CompleteActivity()`.
 
 1. In one terminal, navigate to the `worker` subdirectory and run `go run main.go`.
-2. In another terminal, navigate to the `starter` subdirectory and run `go run main.go`. Your work will produce some logging, eventually including your `taskToken`:
+2. In another terminal, navigate to the `starter` subdirectory and run `go run main.go`. Your worker will produce some logging, eventually including your `taskToken`:
 
 ```
 2024/03/14 15:14:00 INFO  Activity Namespace default TaskQueue async WorkerID 22396@Omelas@ ActivityID 5 ActivityType Activity Attempt 1 WorkflowType Workflow WorkflowID async RunID 0c3cb022-042f-4437-b021-a6cf2a4afe1b taskToken 0a2461613733613533322d363337362d346130332d613563342d36626134626437306139623312056173796e631a2430633363623032322d303432662d343433372d623032312d61366366326134616665316220052801320135420841637469766974794a08080110be80401801
