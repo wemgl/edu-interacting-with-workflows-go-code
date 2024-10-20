@@ -59,7 +59,7 @@ the complete version in the `solution` subdirectory.
 
 ## Part D: Making your Client start both Workflows
 
-1. Finally, open `start/main.go` for editing. Currently, this Client only starts
+1. Finally, open `starter/main.go` for editing. Currently, this Client only starts
    the `PizzaWorkflow`. Directly after the `c.ExecuteWorkflow()` call for the
    `PizzaWorkflow`, add another call that starts the `FulfillOrderWorkflow`. You
    can use the call that starts the `PizzaWorkflow` and the
@@ -72,7 +72,7 @@ the complete version in the `solution` subdirectory.
 At this point, you can run your Workflows.
 
 1. In one terminal, navigate to the `worker` subdirectory and run `go run main.go`.
-2. In another terminal, navigate to the `start` subdirectory and run `go run
+2. In another terminal, navigate to the `starter` subdirectory and run `go run
    main.go`. You should receive output from both Workflows having started and
    returning the expected result:
 
