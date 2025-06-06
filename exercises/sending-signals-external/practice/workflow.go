@@ -8,12 +8,11 @@ import (
 	"go.temporal.io/sdk/workflow"
 )
 
-// TODO Part A: Create a type of `struct{}` named `FulfillOrderSignal`
-// that contains a single `bool` named `Fulfilled`.
+type FulfillOrderSignal struct {
+	Fulfilled bool
+}
 
-// TODO Part A: create a `var` named `signal` that is an instance of
-// `FulfillOrderSignal` with `Fulfilled: true`. This is the Signal that
-// `FulfillOrderWorkflow` will send to `PizzaWorkflow`.
+var signal = FulfillOrderSignal{Fulfilled: true}
 
 func PizzaWorkflow(ctx workflow.Context, order PizzaOrder) (OrderConfirmation, error) {
 	retrypolicy := &temporal.RetryPolicy{
@@ -46,9 +45,9 @@ func PizzaWorkflow(ctx workflow.Context, order PizzaOrder) (OrderConfirmation, e
 	}
 
 	var confirmation OrderConfirmation
-	// TODO Part B: Add a call to `workflow.GetSignalChannel(ctx, "fulfill-order-signal")`
-	// and assign it to a variable like `signalChan`. After that, add
-	// `signalChan.Receive(ctx, &signal)` on the following line.
+
+	signalChan := workflow.GetSignalChannel(ctx, "fulfill-order-signal")
+	signalChan.Receive(ctx, &signal)
 
 	if signal.Fulfilled == true {
 		bill := Bill{
@@ -94,8 +93,13 @@ func FulfillOrderWorkflow(ctx workflow.Context, order PizzaOrder) (string, error
 		return "orderUnfulfilled", nil
 	}
 
-	// TODO Part C: call `workflow.SignalExternalWorkflow()`
-	// to send a Signal to your `PizzaWorkflow`.
+	workflow.SignalExternalWorkflow(
+		ctx,
+		"pizza-workflow-order-Z1238",
+		"",
+		"fulfill-order-signal",
+		signal,
+	).Get(ctx, nil)
 
 	return "orderFulfilled", nil
 }

@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	pizza "interacting/exercises/sending-signals-external/practice"
 	"log"
+	"pizza"
 
 	"go.temporal.io/sdk/client"
 )
@@ -38,10 +38,11 @@ func main() {
 	}
 	log.Println("Started workflow", "WorkflowID", we.GetID(), "RunID", we.GetRunID())
 
-	// TODO Part D: Add another call to c.ExecuteWorkflow() that spawns the
-	// `FulfillOrderWorkflow`. You can use the call that spawns the `PizzaWorkflow`
-	// and the `signalFulfilledOptions` block above as a reference.
-	// Don't forget to capture the Workflow Execution and any errors in different variables.
+	we2, err2 := c.ExecuteWorkflow(context.Background(), signalFulfilledOptions, pizza.FulfillOrderWorkflow, order)
+	if err2 != nil {
+		log.Fatalln("Unable to execute workflow", err)
+	}
+	log.Println("Started workflow", "WorkflowID", we2.GetID(), "RunID", we2.GetRunID())
 
 	var result pizza.OrderConfirmation
 	err = we.Get(context.Background(), &result)
