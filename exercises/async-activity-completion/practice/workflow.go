@@ -2,6 +2,7 @@ package async
 
 import (
 	"context"
+	"encoding/base64"
 	"time"
 
 	"go.temporal.io/sdk/activity"
@@ -32,10 +33,13 @@ func Workflow(ctx workflow.Context, input string) (string, error) {
 func Activity(ctx context.Context, input string) (string, error) {
 	logger := activity.GetLogger(ctx)
 	logger.Info("Activity", "input", input)
-	// TODO Part A: Log the `taskToken` from your activity so you can use it
-	// in another client. You may need to add an encoding library to your
-	// list of imports so that your token can be logged to a terminal.
 
-	// TODO Part B: Update this activity to return
-	// activity.ErrResultPending so it can be completed asynchronously.
+	activityInfo := activity.GetInfo(ctx)
+	// Encode as hex…
+	//taskToken := hex.EncodeToString(activityInfo.TaskToken)
+	// Or Base64
+	taskToken := base64.StdEncoding.EncodeToString(activityInfo.TaskToken)
+	logger.Info("Async. Activity Completion", "taskToken", taskToken)
+
+	return "", activity.ErrResultPending
 }

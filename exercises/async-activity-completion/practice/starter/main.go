@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	async "interacting/exercises/async-activity-completion/practice"
+	"async"
 
 	"go.temporal.io/sdk/client"
 )

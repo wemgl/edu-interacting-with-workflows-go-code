@@ -1,6 +1,9 @@
 package main
 
 import (
+	"context"
+	"encoding/base64"
+	"flag"
 	"log"
 
 	"go.temporal.io/sdk/client"
@@ -13,8 +16,20 @@ func main() {
 	}
 	defer c.Close()
 
-	// TODO Part C: Parse the taskToken logged from your Activity as an
-	// additional CLI argument to this client, then call `CompleteActivity()`
-	// with that taskToken to asynchronously complete your running activity.
-	// You will need to add "context", "flag", and an "encoding" import.
+	var taskToken string
+	flag.StringVar(&taskToken, "tasktoken", "", "Task Token of Async. Activity to Complete")
+	flag.Parse()
+	// Decode from hex…
+	//decoded, err := hex.DecodeString(taskToken)
+	// Or Base64
+	decoded, err := base64.StdEncoding.DecodeString(taskToken)
+	if err != nil {
+		log.Fatalln("Unable to decode token", err)
+	}
+
+	var result string
+	err = c.CompleteActivity(context.Background(), decoded, result, err)
+	if err != nil {
+		log.Fatalln("Unable to complete Async. Activity")
+	}
 }
