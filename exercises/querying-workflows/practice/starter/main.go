@@ -19,6 +19,8 @@ func main() {
 	workflowOptions := client.StartWorkflowOptions{
 		ID:        "queries",
 		TaskQueue: "queries",
+		// Can send custom search attributes from the client like this:
+		//		TypedSearchAttributes: temporal.NewSearchAttributes(queries.CustomerIDSearchAttribute.ValueSet("customer-123")),
 	}
 
 	we, err := c.ExecuteWorkflow(

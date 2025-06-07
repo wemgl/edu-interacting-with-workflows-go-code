@@ -20,6 +20,7 @@ func main() {
 
 	w.RegisterWorkflow(queries.Workflow)
 	w.RegisterActivity(queries.Activity)
+	w.RegisterActivity(queries.CleanupActivity)
 
 	err = w.Run(worker.InterruptCh())
 	if err != nil {
